@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saran, Kritik, Rate Us</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Navigation Top -->
+        <div class="top-nav">
+            <button id="switch-btn-left" class="hidden" onclick="navigateLeft()"></button>
+            <h1 id="page-title">Selamat Datang</h1>
+            <button id="switch-btn-right" class="hidden" onclick="navigateRight()"></button>
+        </div>
+
+        <!-- Main Welcome Page -->
+        <div id="main-menu" class="page">
+            <div class="welcome">
+                <h2>Selamat Datang!</h2>
+                <p>Berikan saran, kritik, dan rating untuk membantu meningkatkan layanan website komunitas kita.</p>
+            </div>
+            <div class="menu">
+                <button onclick="showPage('saran')">Saran</button>
+                <button onclick="showPage('kritik')">Kritik</button>
+                <button onclick="showPage('rate')">Rate Us</button>
+            </div>
+        </div>
+
+        <!-- Saran Form Page -->
+        <div id="saran-page" class="hidden page">
+            <form action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareSaranData()">
+    <select id="saran-website" required onchange="populateFitur('saran')">
+        <option value="">Pilih Website</option>
+    </select>
+
+    <select id="saran-fitur" required>
+        <option value="">Pilih Fitur</option>
+    </select>
+
+    <textarea id="saran-pesan" placeholder="Tulis Saran Anda..." required></textarea>
+
+    <!-- Hidden field untuk gabungan data -->
+    <input type="hidden" name="pesan" id="saran-full-message">
+
+    <!-- Redirect setelah berhasil kirim -->
+    <input type="hidden" name="_next" value="thanksrate.html">
+
+    <button type="submit">Kirim</button>
+</form>
+        </div>
+
+        <!-- Kritik Form Page -->
+        <div id="kritik-page" class="hidden page">
+            <form action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareKritikData()">
+    <select id="kritik-website" required onchange="populateFitur('kritik')">
+        <option value="">Pilih Website</option>
+    </select>
+
+    <select id="kritik-fitur" required>
+        <option value="">Pilih Fitur</option>
+    </select>
+
+    <textarea id="kritik-pesan" placeholder="Tulis Kritik Anda..." required></textarea>
+
+    <!-- Hidden field untuk gabungan data -->
+    <input type="hidden" name="pesan" id="kritik-full-message">
+
+    <!-- Redirect setelah berhasil kirim -->
+    <input type="hidden" name="_next" value="thanksrate.html">
+
+    <button type="submit">Kirim</button>
+</form>
+        </div>
+
+        <!-- Rate Us Page -->
+        <div id="rate-page" class="hidden page">
+            <form action="https://formsubmit.co/fatirahmad6032@gmail.com" method="POST">
+    <select name="website" id="rate-website" required>
+        <option value="">Pilih Website</option>
+    </select>
+
+    <div class="stars" id="star-container">
+        <!-- SVG bintang diisi dari JS -->
+    </div>
+
+    <input type="hidden" name="rating" id="rating-value" required>
+
+    <!-- Redirect setelah berhasil kirim -->
+    <input type="hidden" name="_next" value="thanksrate.html">
+
+    <button type="submit">Kirim</button>
+</form>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
