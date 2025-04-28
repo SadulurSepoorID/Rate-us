@@ -1,103 +1,154 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saran, Kritik, Rate Us</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saran, Kritik, Rate Us</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- Navigation Top -->
-        <div class="top-nav">
-            <button id="switch-btn-left" class="hidden" onclick="navigateLeft()"></button>
-            <h1 id="page-title">Selamat Datang</h1>
-            <button id="switch-btn-right" class="hidden" onclick="navigateRight()"></button>
-        </div>
+  <!-- Navigation Top -->
+  <div class="top-nav">
+    <button id="switch-btn-left" class="hidden"></button>
+    <h1 id="page-title">Selamat Datang</h1>
+    <button id="switch-btn-right" class="hidden"></button>
+  </div>
 
-        <!-- Main Welcome Page -->
-        <div id="main-menu" class="page">
-            <div class="welcome">
-                <h2>Selamat Datang!</h2>
-                <p>Berikan saran, kritik, dan rating untuk membantu meningkatkan layanan website komunitas kita.</p>
-            </div>
-            <div class="menu">
-                <button onclick="showPage('saran')">Saran</button>
-                <button onclick="showPage('kritik')">Kritik</button>
-                <button onclick="showPage('rate')">Rate Us</button>
-            </div>
-        </div>
+  <!-- Main Welcome Page -->
+  <div id="main-menu" class="page">
+    <div class="welcome">
+      <h2>Selamat Datang!</h2>
+      <p>Berikan saran, kritik, dan rating untuk meningkatkan kualitas website komunitas kita.</p>
+    </div>
+    <div class="menu">
+      <button onclick="showPage('saran')">Saran</button>
+      <button onclick="showPage('kritik')">Kritik</button>
+      <button onclick="showPage('rate')">Rate Us</button>
+    </div>
+  </div>
 
-        <!-- Saran Form Page -->
-        <div id="saran-page" class="hidden page">
-            <form action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareSaranData()">
-    <select id="saran-website" required onchange="populateFitur('saran')">
-        <option value="">Pilih Website</option>
-    </select>
+  <!-- Saran Form Page -->
+  <div id="saran-page" class="hidden page">
+    <form id="form-saran" action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareSaranData()">
+      
+      <div class="form-group">
+        <label for="saran-nama">Nama Anda</label>
+        <input type="text" id="saran-nama" name="Nama" placeholder="Masukkan Nama Anda" required>
+      </div>
 
-    <select id="saran-fitur" required>
-        <option value="">Pilih Fitur</option>
-    </select>
+      <div class="form-group">
+        <label for="saran-wa">Nomor WhatsApp</label>
+        <input type="text" id="saran-wa" name="Nomor WhatsApp" placeholder="Masukkan Nomor WhatsApp" required>
+      </div>
 
-    <textarea id="saran-pesan" placeholder="Tulis Saran Anda..." required></textarea>
+      <div class="form-group">
+        <label for="saran-website">Pilih Website</label>
+        <select id="saran-website" required onchange="populateFitur('saran')">
+          <option value="">Pilih Website</option>
+        </select>
+      </div>
 
-    <!-- Hidden field untuk gabungan data -->
-    <input type="hidden" name="pesan" id="saran-full-message">
+      <div class="form-group">
+        <label for="saran-fitur">Pilih Fitur</label>
+        <select id="saran-fitur" required>
+          <option value="">Pilih Fitur</option>
+        </select>
+      </div>
 
-    <!-- Redirect setelah berhasil kirim -->
-    <input type="hidden" name="_next" value="thanksrate.html">
+      <div class="form-group">
+        <label for="saran-pesan">Tulis Saran Anda</label>
+        <textarea id="saran-pesan" placeholder="Tulis saran Anda di sini..." required></textarea>
+      </div>
 
-    <button type="submit">Kirim</button>
-</form>
-        </div>
+      <input type="hidden" name="pesan" id="saran-full-message">
+      <input type="hidden" name="_next" value="https://sadulursepoorid.github.io/Rate-us/thanksrate.html">
 
-        <!-- Kritik Form Page -->
-        <div id="kritik-page" class="hidden page">
-            <form action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareKritikData()">
-    <select id="kritik-website" required onchange="populateFitur('kritik')">
-        <option value="">Pilih Website</option>
-    </select>
+      <button type="submit">Kirim</button>
+    </form>
+  </div>
 
-    <select id="kritik-fitur" required>
-        <option value="">Pilih Fitur</option>
-    </select>
+  <!-- Kritik Form Page -->
+  <div id="kritik-page" class="hidden page">
+    <form id="form-kritik" action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareKritikData()">
+      
+      <div class="form-group">
+        <label for="kritik-nama">Nama Anda</label>
+        <input type="text" id="kritik-nama" name="Nama" placeholder="Masukkan Nama Anda" required>
+      </div>
 
-    <textarea id="kritik-pesan" placeholder="Tulis Kritik Anda..." required></textarea>
+      <div class="form-group">
+        <label for="kritik-wa">Nomor WhatsApp</label>
+        <input type="text" id="kritik-wa" name="Nomor WhatsApp" placeholder="Masukkan Nomor WhatsApp" required>
+      </div>
 
-    <!-- Hidden field untuk gabungan data -->
-    <input type="hidden" name="pesan" id="kritik-full-message">
+      <div class="form-group">
+        <label for="kritik-website">Pilih Website</label>
+        <select id="kritik-website" required onchange="populateFitur('kritik')">
+          <option value="">Pilih Website</option>
+        </select>
+      </div>
 
-    <!-- Redirect setelah berhasil kirim -->
-    <input type="hidden" name="_next" value="thanksrate.html">
+      <div class="form-group">
+        <label for="kritik-fitur">Pilih Fitur</label>
+        <select id="kritik-fitur" required>
+          <option value="">Pilih Fitur</option>
+        </select>
+      </div>
 
-    <button type="submit">Kirim</button>
-</form>
-        </div>
+      <div class="form-group">
+        <label for="kritik-pesan">Tulis Kritik Anda</label>
+        <textarea id="kritik-pesan" placeholder="Tulis kritik Anda di sini..." required></textarea>
+      </div>
 
-        <!-- Rate Us Page -->
-        <div id="rate-page" class="hidden page">
-            <form action="https://formsubmit.co/fatirahmad6032@gmail.com" method="POST">
-    <select name="website" id="rate-website" required>
-        <option value="">Pilih Website</option>
-    </select>
+      <input type="hidden" name="pesan" id="kritik-full-message">
+      <input type="hidden" name="_next" value="https://sadulursepoorid.github.io/Rate-us/thanksrate.html">
 
-    <div class="stars" id="star-container">
-        <!-- SVG bintang diisi dari JS -->
+      <button type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <!-- Rate Us Page -->
+<div id="rate-page" class="hidden page">
+  <form id="form-rate" action="https://formsubmit.co/fatirahmad6032@gmail.com" method="POST" onsubmit="return prepareRateData()">
+
+    <div class="form-group">
+      <label for="rate-nama">Nama Anda</label>
+      <input type="text" id="rate-nama" name="Nama" placeholder="Masukkan Nama Anda" required>
     </div>
 
-    <input type="hidden" name="rating" id="rating-value" required>
-
-    <!-- Redirect setelah berhasil kirim -->
-    <input type="hidden" name="_next" value="thanksrate.html">
-
-    <button type="submit">Kirim</button>
-</form>
-        </div>
-
+    <div class="form-group">
+      <label for="rate-wa">Nomor WhatsApp</label>
+      <input type="text" id="rate-wa" name="Nomor WhatsApp" placeholder="Masukkan Nomor WhatsApp" required>
     </div>
 
-    <script src="script.js"></script>
+    <div class="form-group">
+      <label for="rate-website">Pilih Website</label>
+      <select id="rate-website" name="Website" required onchange="populateFitur('rate')">
+        <option value="">Pilih Website</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Berikan Rating</label>
+      <div class="stars" id="star-container">
+        <!-- SVG Bintang akan di-generate dari script.js -->
+      </div>
+    </div>
+
+    <input type="hidden" name="Rating" id="rating-value" required>
+
+    <input type="hidden" name="pesan" id="rate-full-message">
+    <input type="hidden" name="_next" value="https://sadulursepoorid.github.io/Rate-us/thanksrate.html">
+
+    <button type="submit">Kirim</button>
+  </form>
+</div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
