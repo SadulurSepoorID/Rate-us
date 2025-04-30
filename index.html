@@ -1,154 +1,175 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saran, Kritik, Rate Us</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin - Saran & Kritik</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f9ff;
+      color: #003366;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .back-btn {
+      padding: 10px 6px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #0056b3;
+    }
+
+    h1 {
+      margin: 10px 0 20px;
+      font-size: 24px;
+      color: #002244;
+    }
+
+    .main-container {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #e6f2ff;
+    }
+
+    button {
+      padding: 6px 12px;
+      border: none;
+      background: #dc3545;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c82333;
+    }
+
+    @media screen and (max-width: 768px) {
+      th, td {
+        white-space: nowrap;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-
-  <!-- Navigation Top -->
-  <div class="top-nav">
-    <button id="switch-btn-left" class="hidden"></button>
-    <h1 id="page-title"></h1>
-    <button id="switch-btn-right" class="hidden"></button>
+  <div class="top-bar">
+    <a href="index.html" class="back-btn">← Kembali</a>
+    <h1>Dashboard Admin</h1>
   </div>
 
-  <!-- Main Welcome Page -->
-  <div id="main-menu" class="page">
-    <div class="welcome">
-      <h2>Selamat Datang!</h2>
-      <p>Berikan saran, kritik, dan rating untuk meningkatkan kualitas website komunitas kita.</p>
-    </div>
-    <div class="menu">
-      <button onclick="showPage('saran')">Saran</button>
-      <button onclick="showPage('kritik')">Kritik</button>
-      <button onclick="showPage('rate')">Rate Us</button>
+  <div class="main-container">
+    <div class="table-container">
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>WhatsApp</th>
+            <th>Jenis</th>
+            <th>Website</th>
+            <th>Fitur</th>
+            <th>Pesan</th>
+            <th>Waktu</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Saran Form Page -->
-  <div id="saran-page" class="hidden page">
-    <form id="form-saran" action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareSaranData()">
-      
-      <div class="form-group">
-        <label for="saran-nama">Nama Anda</label>
-        <input type="text" id="saran-nama" name="Nama" placeholder="Masukkan Nama Anda" required>
-      </div>
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxJ6OHv2ly_LNdLmFH-87YkdyEv-ED9N2fi0qizox4Ge9I_WkYRc5VN3vcRJqBnqX0gvQ/exec";
 
-      <div class="form-group">
-        <label for="saran-wa">Nomor WhatsApp</label>
-        <input type="text" id="saran-wa" name="Nomor WhatsApp" placeholder="Masukkan Nomor WhatsApp" required>
-      </div>
+    function fetchData() {
+      fetch(scriptURL)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector("#data-table tbody");
+          tbody.innerHTML = "";
+          data.forEach((row, i) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${i + 1}</td>
+              <td>${row.nama}</td>
+              <td>${row.wa}</td>
+              <td>${row.jenis}</td>
+              <td>${row.website}</td>
+              <td>${row.fitur}</td>
+              <td>${row.pesan}</td>
+              <td>${new Date(row.timestamp).toLocaleString("id-ID")}</td>
+              <td><button onclick="hapusData(${row.id})">Hapus</button></td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+    }
 
-      <div class="form-group">
-        <label for="saran-website">Pilih Website</label>
-        <select id="saran-website" required onchange="populateFitur('saran')">
-          <option value="">Pilih Website</option>
-        </select>
-      </div>
+    function hapusData(id) {
+      if (confirm("Yakin ingin menghapus data ini?")) {
+        fetch(`${scriptURL}?id=${id}`, { method: "DELETE" })
+          .then(res => res.json())
+          .then(() => {
+            alert("Data berhasil dihapus.");
+            fetchData();
+          });
+      }
+    }
 
-      <div class="form-group">
-        <label for="saran-fitur">Pilih Fitur</label>
-        <select id="saran-fitur" required>
-          <option value="">Pilih Fitur</option>
-        </select>
-      </div>
+    window.onload = fetchData;
+  </script>
 
-      <div class="form-group">
-        <label for="saran-pesan">Tulis Saran Anda</label>
-        <textarea id="saran-pesan" placeholder="Tulis saran Anda di sini..." required></textarea>
-      </div>
-
-      <input type="hidden" name="pesan" id="saran-full-message">
-      <input type="hidden" name="_next" value="https://sadulursepoorid.github.io/Rate-us/thanksrate.html">
-
-      <button type="submit">Kirim</button>
-    </form>
-  </div>
-
-  <!-- Kritik Form Page -->
-  <div id="kritik-page" class="hidden page">
-    <form id="form-kritik" action="https://formsubmit.co/fatirahmad1404@gmail.com" method="POST" onsubmit="return prepareKritikData()">
-      
-      <div class="form-group">
-        <label for="kritik-nama">Nama Anda</label>
-        <input type="text" id="kritik-nama" name="Nama" placeholder="Masukkan Nama Anda" required>
-      </div>
-
-      <div class="form-group">
-        <label for="kritik-wa">Nomor WhatsApp</label>
-        <input type="text" id="kritik-wa" name="Nomor WhatsApp" placeholder="Masukkan Nomor WhatsApp" required>
-      </div>
-
-      <div class="form-group">
-        <label for="kritik-website">Pilih Website</label>
-        <select id="kritik-website" required onchange="populateFitur('kritik')">
-          <option value="">Pilih Website</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="kritik-fitur">Pilih Fitur</label>
-        <select id="kritik-fitur" required>
-          <option value="">Pilih Fitur</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="kritik-pesan">Tulis Kritik Anda</label>
-        <textarea id="kritik-pesan" placeholder="Tulis kritik Anda di sini..." required></textarea>
-      </div>
-
-      <input type="hidden" name="pesan" id="kritik-full-message">
-      <input type="hidden" name="_next" value="https://sadulursepoorid.github.io/Rate-us/thanksrate.html">
-
-      <button type="submit">Kirim</button>
-    </form>
-  </div>
-
-  <!-- Rate Us Page -->
-<div id="rate-page" class="hidden page">
-  <form id="form-rate" action="https://formsubmit.co/fatirahmad6032@gmail.com" method="POST" onsubmit="return prepareRateData()">
-
-    <div class="form-group">
-      <label for="rate-nama">Nama Anda</label>
-      <input type="text" id="rate-nama" name="Nama" placeholder="Masukkan Nama Anda" required>
-    </div>
-
-    <div class="form-group">
-      <label for="rate-wa">Nomor WhatsApp</label>
-      <input type="text" id="rate-wa" name="Nomor WhatsApp" placeholder="Masukkan Nomor WhatsApp" required>
-    </div>
-
-    <div class="form-group">
-      <label for="rate-website">Pilih Website</label>
-      <select id="rate-website" name="Website" required onchange="populateFitur('rate')">
-        <option value="">Pilih Website</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Berikan Rating</label>
-      <div class="stars" id="star-container">
-        <!-- SVG Bintang akan di-generate dari script.js -->
-      </div>
-    </div>
-
-    <input type="hidden" name="Rating" id="rating-value" required>
-
-    <input type="hidden" name="pesan" id="rate-full-message">
-    <input type="hidden" name="_next" value="https://sadulursepoorid.github.io/Rate-us/thanksrate.html">
-
-    <button type="submit">Kirim</button>
-  </form>
-</div>
-
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
